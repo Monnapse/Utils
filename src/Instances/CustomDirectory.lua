@@ -26,7 +26,8 @@ function Directory.BuildDirectory(...): string
     return String
 end
 
-function Directory.FindDirectory(Start, RootEnd)
+function Directory.FindDirectory(Start, RootEnd, IncludeEnd: boolean)
+    if IncludeEnd == nil then IncludeEnd = true end
     local Last = Start
     local Build = ""
     local BuildTable = {}
@@ -37,7 +38,7 @@ function Directory.FindDirectory(Start, RootEnd)
         Last = Last.Parent
     until Last == RootEnd
 
-    table.insert(BuildTable, Last.Name)
+    if IncludeEnd then table.insert(BuildTable, Last.Name) end
 
     -- Sort the table from highest value to low lowest value so the directory is going the correct way
     table.sort(BuildTable,
