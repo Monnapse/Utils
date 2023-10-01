@@ -8,6 +8,28 @@
 
 local SPRING = {}
 
+export type Spring = {
+    Position: {
+        DAMPING_RATIO: number,
+        ANGULAR_FREQUENCY: number,
+        Mass: number,
+        Target: Vector3,
+        Current: Vector3,
+        Velocity: Vector3,
+    },
+    Rotation: {
+        DAMPING_RATIO: number,
+        ANGULAR_FREQUENCY: number,
+        Mass: number,
+        Target: Vector3,
+        Current: Vector3,
+        Velocity: Vector3,
+    },
+
+    update: (dt: number) -> CFrame,
+    shove: (cframe: CFrame) -> nil
+}
+
 --// Functions
 function SPRING.new(damping_ratio, angular_frequency, mass, rotation_damping_ratio, rotation_angular_frequency, rotation_mass)
 	local Spring = SPRING
