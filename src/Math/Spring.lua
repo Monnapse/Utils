@@ -32,7 +32,7 @@ export type Spring = {
 
 --// Functions
 function SPRING.new(damping_ratio, angular_frequency, mass, rotation_damping_ratio, rotation_angular_frequency, rotation_mass)
-	local Spring = SPRING
+	local Spring = table.clone(SPRING)
     Spring.Position = {
         --// Constants
         DAMPING_RATIO     = damping_ratio or 1,
