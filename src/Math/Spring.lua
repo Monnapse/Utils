@@ -80,7 +80,7 @@ end
 function SPRING:shove(cframe:CFrame)
     self.Position.Target = cframe.Position or Vector3.new(0,0,0)
     local x,y,z = cframe:ToOrientation()
-    if x ~= nil then
+    if x ~= nil or y ~= nil or z ~= nil then
         self.Rotation.Target = Vector3.new(x,y,z)
     else
         self.Rotation.Target = Vector3.new(0,0,0)
