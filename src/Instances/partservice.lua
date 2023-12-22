@@ -31,6 +31,7 @@ function getPartsFolder(): Folder
     return Folder
 end
 function hidePart(part: Instance)
+    part.Parent = getPartsFolder()
     if part:IsA("BasePart") then
         part.CFrame = CFrame.new(0, 10e7, 0)
     elseif part:IsA("Model") then
@@ -62,6 +63,7 @@ export type partService = {
     part: Instance,
     partClass: string?,
     parts: {partAvailablility},
+    replicateIfOut: boolean,
 
     replicateParts: (amount: number) -> nil,
     retrievePart: () -> Instance,
@@ -83,6 +85,7 @@ function partService.new(part: Instance | string, amount: number, replicateIfOut
     local self: partService = setmetatable({}, partService)
     self.parts = {}
     self.partProperties = partProperties
+    self.replicateIfOut = replicateIfOut
 
     if type(part) == "string" then
         self.partClass = part
@@ -92,7 +95,6 @@ function partService.new(part: Instance | string, amount: number, replicateIfOut
         print("Error creating parts, please specify the part.")
         return
     end
-
     
     self:replicateParts(amount)
 
@@ -136,6 +138,11 @@ end
 function partService:retrievePart()
     local part = getNextAvailablePart(self.parts)
 
+    if self.replicateIfOut then
+        self:replicateParts(1)
+        part = getNextAvailablePart(self.parts)
+    end
+
     part.isAvailable = false
     return part.part
 end
@@ -146,6 +153,7 @@ end
     part: Instance "The part to return"
 --]]
 function partService:returnPart(part: Instance)
+    if not part then return end
     if getPartInAvailability(part, self.parts) then
         getPartInAvailability(part, self.parts).isAvailable = true
         hidePart(part)
