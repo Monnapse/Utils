@@ -1,4 +1,3 @@
 return {
-    Manipulating = require(script.StringManipulating),
-    Random = require(script.Random)
+    Manipulating = require(script.StringManipulating)
 }
